@@ -6,30 +6,51 @@ import (
 	"log"
 	"net/http"
 	"path/filepath"
+
+	"github.com/AlberthGarcia/IceCreamShopGo/pkg/conf"
+	"github.com/AlberthGarcia/IceCreamShopGo/pkg/models"
 )
 
 var functions = template.FuncMap{}
+var appConfig *conf.AppConfig
+
+//NewTemplate sets the config to use it in this file
+func NewTemplate(appConf *conf.AppConfig) {
+	appConfig = appConf
+}
+
+//AddDefaultData
+func AddDefaultData(data *models.TemplateData) *models.TemplateData {
+
+	return data
+}
 
 //RenderTemplates render templates using html/templates
-func RenderTemplates(w http.ResponseWriter, tmp string) {
-	//Call our function to render the templates
-	templateCache, err := CreateTemplateMapCache()
-	if err != nil {
-		log.Println("Error getting the templates")
-		return
+func RenderTemplates(w http.ResponseWriter, tmp string, data *models.TemplateData) {
+
+	var templateCache map[string]*template.Template
+	//True-> we're going to use the app struct to load the templates
+	if appConfig.UseCache {
+		templateCache = appConfig.TemplateCache
+	} else {
+		//read each template since the disk
+		templateCache, _ = CreateTemplateMapCache()
 	}
 
 	//verify that the template exists
 	temp, ok := templateCache[tmp]
 	if !ok {
-		log.Fatal("Template does not exists", err)
+		log.Fatal("Template does not exists")
 		return
 	}
 
+	//new Var type of bytes.Buffer
 	bytesTemp := new(bytes.Buffer)
 
+	//func to add default data
+	data = AddDefaultData(data)
 	//execute the template and save its value into bytesTemp with any Data
-	err = temp.Execute(bytesTemp, nil)
+	err := temp.Execute(bytesTemp, data)
 	if err != nil {
 		log.Println("Cannot execute the template", err)
 		return

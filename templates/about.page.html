@@ -1,5 +1,8 @@
-{{template "base"}}
+{{template "base" .}}
 
 {{define "content" }}
     <h1>This is about page</h1>
+    <p>Hola mundo  {{index .StringMap "Alberth"}}</p>
+    <p>Hola mundo</p>
+    <p>Hola mundo</p>
 {{end}}
