@@ -29,13 +29,20 @@ func NewHandler(rep *Repository) {
 }
 
 func (repo *Repository) Home(w http.ResponseWriter, r *http.Request) {
-
+	//get the ip of the user
+	remoteIP := r.RemoteAddr
+	//pull that ip address in our session
+	repo.AppConfig.Session.Put(r.Context(), "remote_ip", remoteIP)
 	render.RenderTemplates(w, "index.page.html", &models.TemplateData{})
 }
 
 func (repo *Repository) About(w http.ResponseWriter, r *http.Request) {
 	strignMapData := make(map[string]string)
 	strignMapData["Alberth"] = "Test"
+
+	//get the ip address and save in the map
+	remoteIP := repo.AppConfig.Session.GetString(r.Context(), "remote_ip")
+	strignMapData["remote_ip"] = remoteIP
 
 	render.RenderTemplates(w, "about.page.html", &models.TemplateData{
 		StringMap: strignMapData,

@@ -3,6 +3,12 @@
 {{define "content" }}
     <h1>This is about page</h1>
     <p>Hola mundo  {{index .StringMap "Alberth"}}</p>
-    <p>Hola mundo</p>
-    <p>Hola mundo</p>
+    
+    <p>
+        {{if ne (index .StringMap "remote_ip") ""}}
+            Your remote ip address is {{index .StringMap "remote_ip"}}
+        {{else}}
+            I don't know your ip address yes. Please click on <a href="/">Home Page</a>
+        {{end}}
+    </p>
 {{end}}
