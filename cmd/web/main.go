@@ -48,7 +48,7 @@ func main() {
 
 	server := &http.Server{
 		Addr:    numberPort,
-		Handler: routes(&appConfig),
+		Handler: routes(),
 	}
 
 	err = server.ListenAndServe()

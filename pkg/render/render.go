@@ -9,6 +9,7 @@ import (
 
 	"github.com/AlberthGarcia/IceCreamShopGo/pkg/conf"
 	"github.com/AlberthGarcia/IceCreamShopGo/pkg/models"
+	"github.com/justinas/nosurf"
 )
 
 var functions = template.FuncMap{}
@@ -20,13 +21,14 @@ func NewTemplate(appConf *conf.AppConfig) {
 }
 
 //AddDefaultData
-func AddDefaultData(data *models.TemplateData) *models.TemplateData {
-
+func AddDefaultData(data *models.TemplateData, r *http.Request) *models.TemplateData {
+	//Create our token and set to the struct in appConfig
+	data.CSRFToken = nosurf.Token(r)
 	return data
 }
 
 //RenderTemplates render templates using html/templates
-func RenderTemplates(w http.ResponseWriter, tmp string, data *models.TemplateData) {
+func RenderTemplates(w http.ResponseWriter, r *http.Request, tmp string, data *models.TemplateData) {
 
 	var templateCache map[string]*template.Template
 	//True-> we're going to use the app struct to load the templates
@@ -48,7 +50,7 @@ func RenderTemplates(w http.ResponseWriter, tmp string, data *models.TemplateDat
 	bytesTemp := new(bytes.Buffer)
 
 	//func to add default data
-	data = AddDefaultData(data)
+	data = AddDefaultData(data, r)
 	//execute the template and save its value into bytesTemp with any Data
 	err := temp.Execute(bytesTemp, data)
 	if err != nil {

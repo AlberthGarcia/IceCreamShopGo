@@ -3,14 +3,13 @@ package main
 import (
 	"net/http"
 
-	"github.com/AlberthGarcia/IceCreamShopGo/pkg/conf"
 	"github.com/AlberthGarcia/IceCreamShopGo/pkg/handlers"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 )
 
 //routes has the routes of our web application and middlewares
-func routes(app *conf.AppConfig) http.Handler {
+func routes() http.Handler {
 	mux := chi.NewRouter()
 
 	//middlewares
@@ -20,6 +19,11 @@ func routes(app *conf.AppConfig) http.Handler {
 	//routes
 	mux.Get("/", handlers.Repo.Home)
 	mux.Get("/about", handlers.Repo.About)
+
+	//url-contact
+	mux.Get("/contact", handlers.Repo.Contact)
+	mux.Post("/contact", handlers.Repo.PostContact)
+	mux.Get("/contact-json", handlers.Repo.JsonContact)
 
 	return mux
 }
