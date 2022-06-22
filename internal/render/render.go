@@ -7,8 +7,8 @@ import (
 	"net/http"
 	"path/filepath"
 
-	"github.com/AlberthGarcia/IceCreamShopGo/pkg/conf"
-	"github.com/AlberthGarcia/IceCreamShopGo/pkg/models"
+	"github.com/AlberthGarcia/IceCreamShopGo/internal/conf"
+	"github.com/AlberthGarcia/IceCreamShopGo/internal/models"
 	"github.com/justinas/nosurf"
 )
 

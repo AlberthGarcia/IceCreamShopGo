@@ -2,19 +2,40 @@
 
 {{define "content"}}
 <main>
-    <form class="row g-3" action="/contact" method="post">
+    <form class="row g-3" id="form-Contact" action="/contact" method="post" novalidate>
       <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
         <div class="col-auto">
           <label for="username" class="visually-hidden">Username</label>
-          <input type="text" class="form-control" id="username" placeholder="Username" name="username">
+          <input type="text" class="form-control" id="username" placeholder="Username" name="username" required>
         </div>
         <div class="col-auto">
           <label for="password" class="visually-hidden">Password</label>
-          <input type="password" class="form-control" id="password" placeholder="Password" name="password">
+          <input type="password" class="form-control" id="password" placeholder="Password" name="password" required>
         </div>
         <div class="col-auto">
           <button type="submit" class="btn btn-primary mb-3">Send</button>
         </div>
       </form> <!-- Form  -->
 </main>
+{{end}}
+
+{{define "js"}}
+
+  <script>
+       document.querySelector("#form-Contact").addEventListener('submit',(e)=>{
+        e.preventDefault()
+
+        const form = document.getElementById('form-Contact')
+        let formData = new FormData(form)
+
+        fetch("/contact-json",{
+          method: "post",
+          body: formData
+        })
+        .then(response => response.json())
+        .then(data =>{
+          console.log(data)
+        })
+       })
+  </script>
 {{end}}

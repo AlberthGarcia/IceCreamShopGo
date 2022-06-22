@@ -6,9 +6,9 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/AlberthGarcia/IceCreamShopGo/pkg/conf"
-	"github.com/AlberthGarcia/IceCreamShopGo/pkg/models"
-	"github.com/AlberthGarcia/IceCreamShopGo/pkg/render"
+	"github.com/AlberthGarcia/IceCreamShopGo/internal/conf"
+	"github.com/AlberthGarcia/IceCreamShopGo/internal/models"
+	"github.com/AlberthGarcia/IceCreamShopGo/internal/render"
 )
 
 //Repo is a var of Repository
@@ -75,6 +75,7 @@ type jsonResponse struct {
 	Message string `json:"message"`
 }
 
+//JsonContact send the conf to the header and return a json with the response
 func (repo *Repository) JsonContact(w http.ResponseWriter, r *http.Request) {
 	resp := jsonResponse{
 		OK:      true,

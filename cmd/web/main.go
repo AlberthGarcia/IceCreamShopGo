@@ -5,9 +5,9 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/AlberthGarcia/IceCreamShopGo/pkg/conf"
-	"github.com/AlberthGarcia/IceCreamShopGo/pkg/handlers"
-	"github.com/AlberthGarcia/IceCreamShopGo/pkg/render"
+	"github.com/AlberthGarcia/IceCreamShopGo/internal/conf"
+	"github.com/AlberthGarcia/IceCreamShopGo/internal/handlers"
+	"github.com/AlberthGarcia/IceCreamShopGo/internal/render"
 	"github.com/alexedwards/scs/v2"
 )
 

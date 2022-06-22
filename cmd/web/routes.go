@@ -3,7 +3,7 @@ package main
 import (
 	"net/http"
 
-	"github.com/AlberthGarcia/IceCreamShopGo/pkg/handlers"
+	"github.com/AlberthGarcia/IceCreamShopGo/internal/handlers"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 )
@@ -23,7 +23,7 @@ func routes() http.Handler {
 	//url-contact
 	mux.Get("/contact", handlers.Repo.Contact)
 	mux.Post("/contact", handlers.Repo.PostContact)
-	mux.Get("/contact-json", handlers.Repo.JsonContact)
+	mux.Post("/contact-json", handlers.Repo.JsonContact)
 
 	return mux
 }
